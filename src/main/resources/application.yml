@@ -1,0 +1,73 @@
+micronaut:
+  application:
+    name: ewcharge
+  server:
+    port: ${PORT:`8080`}
+  router:
+    static-resources:
+      swagger:
+        paths: classpath:META-INF/swagger
+        mapping: /swagger/**
+      swagger-ui:
+        paths: classpath:META-INF/swagger/views/swagger-ui
+        mapping: /swagger-ui/**
+  endpoints:
+    prometheus:
+      sensitive: false
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+        descriptions: true
+        step: PT1M
+    enabled: true
+  security:
+    authentication: bearer
+    token:
+      jwt:
+        enabled: true
+        signatures:
+          secret:
+            generator:
+              secret: ${JWT_GENERATOR_SIGNATURE_SECRET:`f79a3a1d-720b-4f68-a3a5-294a00ddc77f`}
+        generator:
+          refresh-token:
+            secret: ${JWT_REFRESH_SIGNATURE_SECRET:`f79a3a1d-720b-4f68-a3a5-294a00ddc77f`}
+    interceptUrlMap:
+      - pattern: "/swagger/**"
+        httpMethod: GET
+        access:
+          - isAnonymous()
+      - pattern: "/swagger-ui/**"
+        httpMethod: GET
+        access:
+          - isAnonymous()
+      - pattern: "/prometheus/**"
+        httpMethod: GET
+        access:
+          - isAnonymous()
+tracing:
+  zipkin:
+    http:
+      url: ${ZIPKIN_URL:`http://localhost:9411`}
+    enabled: ${ZIPKIN_ENABLED:`true`}
+    sampler:
+      probability: ${ZIPKIN_PROBABILITY:`1`}
+datasources:
+  default:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    db-type: mysql
+    url: ${MYSQL_URL:`jdbc:mysql://localhost:3306/`}
+    username: ${MYSQL_USER:`root`}
+    password: ${MYSQL_PASSWORD:`1`}
+    schema-generate: CREATE_DROP
+    dialect: MYSQL
+    schema: ${MYSQL_SCHEMA:`ew_charge`}
+hashid:
+  salt: ${HASHID_SALT:`8baa1388-8caf-4279-ac2c-54dd5bb825c1`}
+  length: ${HASHID_LENGTH:`10`}
+redis.uri: ${REDIS_URI:`redis://localhost:6379`}
+netty:
+  default:
+    allocator:
+      max-order: 3

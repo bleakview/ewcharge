@@ -1,0 +1,117 @@
+version: "3.9"
+networks:
+  grafananetwork:
+
+services:
+  ewcharge:
+    image: bleakview/ewcharge:latest
+    container_name: ewcharge
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: 8080
+      MYSQL_URL: jdbc:mysql://mysql:3306/
+      MYSQL_SCHEMA: ew_charge
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 1
+      REDIS_URI: redis://redis:6379
+      ZIPKIN_URL: http://zipkin:9411
+      ZIPKIN_ENABLED: 'true'
+      ZIPKIN_PROBABILITY: 1
+      HASHID_SALT: 8baa1388-8caf-4279-ac2c-54dd5bb825c1
+      HASHID_LENGTH: 10
+      JWT_GENERATOR_SIGNATURE_SECRET: f79a3a1d-720b-4f68-a3a5-294a00ddc77f
+      JWT_REFRESH_SIGNATURE_SECRET: f79a3a1d-720b-4f68-a3a5-294a00ddc77f
+    networks:
+      - grafananetwork
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - grafananetwork
+    healthcheck:
+      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+      interval: 10s
+      timeout: 2s
+      retries: 20
+  mysql:
+    image: mysql:8.0.29-debian
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 1
+      MYSQL_DATABASE: ew_charge
+    networks:
+      - grafananetwork
+    healthcheck:
+      test: "mysql -uroot -p1 ew_charge -e 'select 1'"
+      interval: 10s
+      timeout: 2s
+      retries: 20
+  loki:
+    image: grafana/loki:2.6.0
+    container_name: loki
+    ports:
+      - "3100:3100"
+    volumes:
+      - type: bind
+        source: ./composeconf/loki-config.yaml
+        target: /etc/loki/local-config.yaml
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - grafananetwork
+    healthcheck:
+      test: wget -q --tries=1 -O- http://127.0.0.1:3100/ready|grep -q "ready"
+      interval: 10s
+      timeout: 2s
+      retries: 20
+
+  promtail:
+    image: grafana/promtail:2.6.0
+    container_name: promtail
+    volumes:
+      - /var/log:/var/log
+      - type: bind
+        source: ./composeconf/promtail-config.yaml
+        target: /etc/promtail/promtail-config.yaml
+    command: -config.file=/etc/promtail/promtail-config.yaml
+    networks:
+      - grafananetwork
+  zipkin:
+    image: openzipkin/zipkin-slim
+    container_name: zipkin
+    environment:
+      - STORAGE_TYPE=mem
+    ports:
+      - 9411:9411
+    networks:
+      - grafananetwork
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    restart: always
+    ports:
+      - 9090:9090
+    volumes:
+      - type: bind
+        source: ./composeconf/prometheus.yml
+        target: /etc/prometheus/prometheus.yml
+    networks:
+      - grafananetwork
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    networks:
+      - grafananetwork      
+    
+      

@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: com.electricvehicle.charge
+testFramework: junit
+sourceLanguage: kotlin
+buildTool: gradle
+features: [ annotation-api, app-name, data, data-jdbc, flyway, graalvm, gradle, http-client, jackson-databind, jdbc-hikari, junit, kotlin, kotlin-application, kotlin-build, logback, management, micrometer, micrometer-prometheus, micronaut-build, mysql, netty-server, openapi, readme, redis-lettuce, security-annotations, security-jwt, shade, swagger-ui, test-resources, yaml ]

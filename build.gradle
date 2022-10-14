@@ -1,0 +1,95 @@
+plugins {
+    id("org.jetbrains.kotlin.jvm") version "1.6.21"
+    id("org.jetbrains.kotlin.kapt") version "1.6.21"
+    id("org.jetbrains.kotlin.plugin.allopen") version "1.6.21"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("io.micronaut.application") version "3.6.2"
+    id("io.micronaut.test-resources") version "3.6.2"
+}
+
+version = "0.1"
+group = "com.electricvehicle.charge"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    kapt("io.micronaut.data:micronaut-data-processor")
+    kapt("io.micronaut:micronaut-http-validation")
+    kapt("io.micronaut.openapi:micronaut-openapi")
+    kapt("io.micronaut.security:micronaut-security-annotations")
+    implementation("com.github.loki4j:loki-logback-appender:1.3.2")
+    implementation('pl.tkowalcz.tjahzi:log4j2-appender-nodep:0.9.23')
+    implementation("org.apache.httpcomponents:httpclient:4.5.13")
+    implementation("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut:micronaut-jackson-databind")
+    implementation("io.micronaut:micronaut-management")
+    implementation("io.micronaut.data:micronaut-data-jdbc")
+    implementation("io.micronaut.flyway:micronaut-flyway")
+    implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
+    implementation("io.micronaut.micrometer:micronaut-micrometer-core")
+    implementation("io.micronaut.micrometer:micronaut-micrometer-registry-prometheus")
+    implementation("io.micronaut.redis:micronaut-redis-lettuce")
+    implementation("io.micronaut.security:micronaut-security-jwt")
+    implementation("io.micronaut.sql:micronaut-jdbc-hikari")
+    implementation("io.swagger.core.v3:swagger-annotations")
+    implementation("jakarta.annotation:jakarta.annotation-api")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
+    runtimeOnly("ch.qos.logback:logback-classic:1.2.11")
+    runtimeOnly("mysql:mysql-connector-java")
+    runtimeOnly("org.flywaydb:flyway-mysql")
+    runtimeOnly("dev.miku:r2dbc-mysql")
+    compileOnly("org.graalvm.nativeimage:svm")
+    implementation('org.hashids:hashids:1.0.3')
+    implementation("io.micronaut:micronaut-tracing")
+    implementation("io.micronaut.tracing:micronaut-tracing-zipkin")
+    implementation("io.zipkin.brave:brave-instrumentation-http:5.14.1")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("org.mindrot:jbcrypt:0.4")
+
+    implementation("io.micronaut:micronaut-validation")
+    implementation("org.jetbrains.exposed:exposed-core:0.40.1")
+    implementation("org.jetbrains.exposed:exposed-dao:0.40.1")
+    implementation("org.jetbrains.exposed:exposed-jdbc:0.40.1")
+    implementation("org.locationtech.proj4j:proj4j:1.1.5")
+    implementation("io.micronaut.problem:micronaut-problem-json")
+    annotationProcessor("io.micronaut.serde:micronaut-serde-processor:1.0.1")
+
+    runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
+
+}
+
+
+application {
+    mainClass.set("com.electricvehicle.charge.ApplicationKt")
+}
+java {
+    sourceCompatibility = JavaVersion.toVersion("11")
+}
+
+tasks {
+    compileKotlin {
+        kotlinOptions {
+            jvmTarget = "11"
+        }
+    }
+    compileTestKotlin {
+        kotlinOptions {
+            jvmTarget = "11"
+        }
+    }
+}
+graalvmNative.toolchainDetection = false
+micronaut {
+    runtime("netty")
+    testRuntime("junit5")
+    processing {
+        incremental(true)
+        annotations("com.electricvehicle.charge.*")
+    }
+}
+
+
+

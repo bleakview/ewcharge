@@ -1,0 +1,31 @@
+name: publish to docker registry
+on: [push] # When pushing to any branch then run this action
+
+env:
+  DOCKER_USER: ${{secrets.DOCKER_USER}}
+  DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+  REPO_NAME: ${{secrets.REPO_NAME}}
+jobs:
+  push-image-to-docker-hub: # job name
+    runs-on: ubuntu-latest # runner name : (ubuntu latest version)
+    steps:
+      - uses: oprypin/find-latest-tag@v1 # find the latest tag
+        with:
+          repository: "${{ github.event.repository.full_name }}"  # The repository to scan.
+          releases-only: true  # We know that all relevant tags have a GitHub release for them.
+        id: octokit  # The step ID to refer to later.
+      - uses: actions/checkout@v2 # first action : checkout source code
+      - name: docker login
+        run: | # log into docker hub account
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      - name: Get current date # get the date of the build
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y%m%d%H%M%S')"     
+      - name: Build the Docker image # build The image with version tag
+        run: docker build . --file Dockerfile --tag $DOCKER_USER/$REPO_NAME:${{ steps.octokit.outputs.tag }}-b${{ steps.date.outputs.date }}
+      - name: Docker Push # push The image to the docker hub with version tag
+        run: docker push $DOCKER_USER/$REPO_NAME:${{ steps.octokit.outputs.tag }}-b${{ steps.date.outputs.date }}
+      - name: Build the Docker image # build The image with latest tag
+        run: docker build . --file Dockerfile --tag $DOCKER_USER/$REPO_NAME    
+      - name: Docker Push # push The image to the docker hub with latest tag
+        run: docker push $DOCKER_USER/$REPO_NAME        
