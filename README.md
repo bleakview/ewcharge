@@ -1,3 +1,4 @@
+[![publish to docker registry](https://github.com/bleakview/ewcharge/actions/workflows/push_to_docker_hub.yml/badge.svg)](https://github.com/bleakview/ewcharge/actions/workflows/push_to_docker_hub.yml)
 # A sample project with Micronaut and Kotlin
 
 This is a sample project for micronaut and kotlin with mysql and redis as you can see on the title but also includes
