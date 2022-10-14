@@ -42,7 +42,7 @@ coding. I intentionally do not use magic mapper methods so that I can see errors
 
 ## Getting started
 
-First use ```docker compose up``` method to start system. Open ```http://localhost:8080``` in browser. In order to do anything you need to have a JWT token but in order you to have a JWT token you need to enter system. In order to break this chicken egg problem an admin controller is created username is admin password is magic as you can use createschema and createtestuser to bootstrap system.
+First use ```docker compose up``` method to start system. Open ```http://localhost:8080/swagger-ui/``` in browser. In order to do anything you need to have a JWT token but in order you to have a JWT token you need to enter system. In order to break this chicken egg problem an admin controller is created username is admin password is magic as you can use createschema and createtestuser to bootstrap system.
 
 After creating use curl to get authentication JWT token.  
 ```
