@@ -67,6 +67,8 @@ eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsIm5iZiI6MTY2NTY0ODg5Mywicm9sZXMiOlsiQUR
 ```
 In Swagger UI click 'Authorization' button and paste the access_token there. You can use the other methods there.
 
+For docker image you can goto [https://hub.docker.com/r/bleakview/ewcharge](https://hub.docker.com/r/bleakview/ewcharge).
 
 If you see any errors or have questions don't hesitate to ask.
+
 Happy coding.
