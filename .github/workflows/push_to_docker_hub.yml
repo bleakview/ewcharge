@@ -1,5 +1,5 @@
 name: publish to docker registry
-on: [push] # When pushing to any branch then run this action
+on: [ push ] # When pushing to any branch then run this action
 
 env:
   DOCKER_USER: ${{secrets.DOCKER_USER}}
@@ -20,12 +20,12 @@ jobs:
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
       - name: Get current date # get the date of the build
         id: date
-        run: echo "::set-output name=date::$(date +'%Y%m%d%H%M%S')"     
+        run: echo "::set-output name=date::$(date +'%Y%m%d%H%M%S')"
       - name: Build the Docker image # build The image with version tag
         run: docker build . --file Dockerfile --tag $DOCKER_USER/$REPO_NAME:${{ steps.octokit.outputs.tag }}-b${{ steps.date.outputs.date }}
       - name: Docker Push # push The image to the docker hub with version tag
         run: docker push $DOCKER_USER/$REPO_NAME:${{ steps.octokit.outputs.tag }}-b${{ steps.date.outputs.date }}
       - name: Build the Docker image # build The image with latest tag
-        run: docker build . --file Dockerfile --tag $DOCKER_USER/$REPO_NAME    
+        run: docker build . --file Dockerfile --tag $DOCKER_USER/$REPO_NAME
       - name: Docker Push # push The image to the docker hub with latest tag
         run: docker push $DOCKER_USER/$REPO_NAME        

@@ -66,6 +66,7 @@ datasources:
 hashid:
   salt: ${HASHID_SALT:`8baa1388-8caf-4279-ac2c-54dd5bb825c1`}
   length: ${HASHID_LENGTH:`10`}
+loki.uri: ${LOKI_URI:`http://localhost:3100/loki/api/v1/push`}
 redis.uri: ${REDIS_URI:`redis://localhost:6379`}
 netty:
   default:

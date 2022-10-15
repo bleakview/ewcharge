@@ -20,6 +20,7 @@ services:
       ZIPKIN_PROBABILITY: 1
       HASHID_SALT: 8baa1388-8caf-4279-ac2c-54dd5bb825c1
       HASHID_LENGTH: 10
+      LOKI_URI: http://loki:3100/loki/api/v1/push
       JWT_GENERATOR_SIGNATURE_SECRET: f79a3a1d-720b-4f68-a3a5-294a00ddc77f
       JWT_REFRESH_SIGNATURE_SECRET: f79a3a1d-720b-4f68-a3a5-294a00ddc77f
     networks:
