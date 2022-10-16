@@ -17,7 +17,7 @@ open class BaseRepository<T : BaseTable<U>, U : IBaseEntity>(
 	private val longIdTable: T
 ) {
 	var db: Database? = databaseService.getDBInstance()
-	private val log: Logger = LoggerFactory.getLogger(this::class.java)
+	private val log: Logger = LoggerFactory.getLogger(BaseRepository::class.java)
 
 	fun getAll(): List<IBaseEntity>? {
 		var resultList: List<IBaseEntity>? = null

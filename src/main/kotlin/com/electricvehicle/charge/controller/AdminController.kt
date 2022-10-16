@@ -27,7 +27,7 @@ open class AdminController(
 	private val cacheService: CacheService,
 	private val databaseService: DatabaseService
 ) {
-	private val log: Logger = LoggerFactory.getLogger(this::class.java)
+	private val log: Logger = LoggerFactory.getLogger(AdminController::class.java)
 
 	@Post("/createschema")
 	@Produces(MediaType.APPLICATION_JSON)

@@ -33,7 +33,7 @@ open class UserController(
 	private val hashIdService: HashIdService,
 ) {
 	private val cachePrefix = "UserModel"
-	private val log: Logger = LoggerFactory.getLogger(this::class.java)
+	private val log: Logger = LoggerFactory.getLogger(UserController::class.java)
 
 	@Get("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)

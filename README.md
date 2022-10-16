@@ -77,12 +77,14 @@ eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsIm5iZiI6MTY2NTY0ODg5Mywicm9sZXMiOlsiQUR
 
 In Swagger UI click 'Authorization' button and paste the access_token there. You can use the other methods there.
 
-Hashid is used in order to hide ids, although they are kept in database as long they are served as string in frontend 
+Hashid is used in order to hide ids, although they are kept in database as long they are served as string in frontend
 
 ## Docker
+
 For docker image you can goto [https://hub.docker.com/r/bleakview/ewcharge](https://hub.docker.com/r/bleakview/ewcharge)
 .
 The docker image options are given below:
+
 ```
       PORT: 8080 #port number that will be served 
       MYSQL_URL: jdbc:mysql://mysql:3306/ #mysql uri 
@@ -99,6 +101,7 @@ The docker image options are given below:
       JWT_GENERATOR_SIGNATURE_SECRET: f79a3a1d-720b-4f68-a3a5-294a00ddc77f # jwt secret
       JWT_REFRESH_SIGNATURE_SECRET: f79a3a1d-720b-4f68-a3a5-294a00ddc77f # jwt refresh secret
 ```
+
 If you see any errors or have questions don't hesitate to ask.
 
 Happy coding.

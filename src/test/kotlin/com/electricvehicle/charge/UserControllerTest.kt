@@ -26,8 +26,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 
 @MicronautTest
 class UserControllerTest {
@@ -70,8 +68,6 @@ class UserControllerTest {
 		assertNotNull(thrown.response)
 		assertEquals(HttpStatus.NOT_FOUND, thrown.status)
 	}
-
-	private val log: Logger = LoggerFactory.getLogger(this::class.java)
 
 	@Test
 	fun testUserOperations() {

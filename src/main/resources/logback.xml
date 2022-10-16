@@ -1,5 +1,6 @@
 <configuration>
-    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger - %msg%n"/>
+    <property name="LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} h=${HOSTNAME} c=%logger{20}  %-5level [%thread] %logger - %msg%n"/>
     <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
         <http class="com.github.loki4j.logback.ApacheHttpSender">
             <url>${LOKI_URI}</url>
@@ -10,7 +11,7 @@
                 <keyValueSeparator>:</keyValueSeparator>
             </label>
             <message>
-                <pattern>l=%level h=${HOSTNAME} c=%logger{20} t=%thread | %msg %ex</pattern>
+                <pattern>${LOG_PATTERN}</pattern>
             </message>
             <sortByTime>true</sortByTime>
         </format>

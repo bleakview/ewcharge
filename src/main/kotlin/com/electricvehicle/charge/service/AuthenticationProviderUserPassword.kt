@@ -12,9 +12,16 @@ import org.slf4j.LoggerFactory
 import reactor.core.publisher.Flux
 import reactor.core.publisher.FluxSink
 
+/**
+ * This service is for Authentication,Authorization with JWT tokens
+ */
 @Singleton
 class AuthenticationProviderUserPassword(private val userRepository: UserRepository) : AuthenticationProvider {
-	private val log: Logger = LoggerFactory.getLogger(CacheService::class.java)
+	private val log: Logger = LoggerFactory.getLogger(AuthenticationProviderUserPassword::class.java)
+
+	/**
+	 * Authenticate users with username password
+	 */
 	override fun authenticate(
 		httpRequest: HttpRequest<*>?,
 		authenticationRequest: AuthenticationRequest<*, *>

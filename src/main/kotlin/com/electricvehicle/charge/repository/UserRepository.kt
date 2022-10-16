@@ -21,7 +21,7 @@ class UserRepository(
 	private val databaseService: DatabaseService
 ) :
 	BaseRepository<UsersTable, UserEntity>(hashIdService, databaseService, UsersTable) {
-	private val log: Logger = LoggerFactory.getLogger(this::class.java)
+	private val log: Logger = LoggerFactory.getLogger(UserRepository::class.java)
 	fun getUserByUserName(username: String): UserEntity? {
 		var userEntity: UserEntity? = null
 		transaction(db) {
@@ -35,7 +35,7 @@ class UserRepository(
 	}
 
 	fun validateUser(userName: String, password: String): UserEntity? {
-		var userEntity = getUserByUserName(userName)
+		val userEntity = getUserByUserName(userName)
 		if ((userEntity != null) &&
 			userEntity.isActive &&
 			(BCrypt.checkpw(password, userEntity.password))
@@ -65,7 +65,6 @@ class UserRepository(
 	}
 
 	fun updateUser(userEntity: UserEntity): UserEntity? {
-		var recordId: Long = 0
 		try {
 			if (find(userEntity.id) == null) {
 				return null

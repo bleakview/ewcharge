@@ -4,6 +4,11 @@ import io.micronaut.context.annotation.Value
 import jakarta.inject.Singleton
 import org.hashids.Hashids
 
+/**
+ * Service used to change default long ids to string. This is not done for security.
+ * Security through obfuscation is dumb this is done to hide information of how many records
+ * database has.
+ */
 @Singleton
 class HashIdService {
 	@Value("\${hashid.salt}")

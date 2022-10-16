@@ -10,7 +10,7 @@ import java.util.*
 @Singleton
 class RefreshTokenRepository(private val cacheService: CacheService) {
 	private val cachePrefix = "RefreshTokenRepository"
-	private val log: Logger = LoggerFactory.getLogger(this::class.java)
+	private val log: Logger = LoggerFactory.getLogger(RefreshTokenRepository::class.java)
 	fun save(username: String, refreshToken: String, revoked: Boolean): RefreshTokenEntity {
 		val refreshTokenEntity = RefreshTokenEntity(
 			id = refreshToken,
