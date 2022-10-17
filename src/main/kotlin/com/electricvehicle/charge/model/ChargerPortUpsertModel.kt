@@ -14,6 +14,9 @@ data class ChargerPortUpsertModel(
 	@field:NotBlank val chargerPlugTypeName: String,
 )
 
+/**
+ * converts model to entity
+ */
 fun ChargerPortUpsertModel.toRecord(hashIdService: HashIdService): ChargerPortEntity = ChargerPortEntity(
 	id = hashIdService.decodeHash(id),
 	isActive = isActive,

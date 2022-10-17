@@ -16,6 +16,10 @@ class CacheService(
 ) {
 	private val log: Logger = LoggerFactory.getLogger(CacheService::class.java)
 	private val mapper = jacksonObjectMapper()
+
+	/**
+	 * Puts new data to Redis Cache
+	 */
 	fun putData(key: String, value: Any) {
 		try {
 			val commands = statefulRedisConnection.sync()
@@ -25,6 +29,9 @@ class CacheService(
 		}
 	}
 
+	/**
+	 * get data from Redis Cache. Used for Lists
+	 */
 	fun <T> getData(key: String, classType: Class<T>): T? {
 		try {
 			val commands = statefulRedisConnection.sync()
@@ -40,6 +47,9 @@ class CacheService(
 		return null
 	}
 
+	/**
+	 * get data from Redis Cache used for normal data types
+	 */
 	fun <T> getData(key: String): T? {
 		try {
 			val commands = statefulRedisConnection.sync()
@@ -55,6 +65,9 @@ class CacheService(
 		return null
 	}
 
+	/**
+	 * Deletes data from Redis Cache
+	 */
 	fun delete(key: String) {
 		try {
 			val commands = statefulRedisConnection.sync()
@@ -64,6 +77,9 @@ class CacheService(
 		}
 	}
 
+	/**
+	 * Deletes all data from Redis Cache with the given [prefix]
+	 */
 	fun deleteAll(prefix: String) {
 		try {
 			val pattern = "${prefix}*"
@@ -82,12 +98,18 @@ class CacheService(
 		}
 	}
 
+	/**
+	 * Deletes all given keys with [cursor]
+	 */
 	private fun deleteCursor(cursor: KeyScanCursor<String>) {
 		for (key in cursor.keys) {
 			statefulRedisConnection.sync().del(key)
 		}
 	}
 
+	/**
+	 * Get number of keys in database
+	 */
 	fun count(): Long {
 		try {
 			val commands = statefulRedisConnection.sync()

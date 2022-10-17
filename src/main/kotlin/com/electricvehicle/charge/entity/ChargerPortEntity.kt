@@ -13,6 +13,9 @@ data class ChargerPortEntity(
 	val chargerPlugTypeName: String
 ) : IBaseEntity
 
+/**
+ * converts Entity to Model
+ */
 fun ChargerPortEntity.toChargerPortModel(hashIdService: HashIdService): ChargerPortModel =
 	ChargerPortModel(
 		id = hashIdService.encodeHash(this.id),

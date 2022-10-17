@@ -15,7 +15,11 @@ object ChargerPortsTable : BaseTable<ChargerPortEntity>(tableName = "charger_plu
 	val longitude: Column<Double> = double("longitude")
 	val powerInWatt: Column<Int> = integer("power_in_watts")
 	val chargerPlugTypeName = varchar("charger_plug_type_name", 50)
-	override fun toRecord(hashIdService: HashIdService, row: ResultRow): ChargerPortEntity =
+
+	/**
+	 * Convert row to entity
+	 */
+	override fun toEntity(row: ResultRow): ChargerPortEntity =
 		ChargerPortEntity(
 			id = row[id].value,
 			isActive = row[isActive],
@@ -26,6 +30,9 @@ object ChargerPortsTable : BaseTable<ChargerPortEntity>(tableName = "charger_plu
 			chargerPlugTypeName = row[chargerPlugTypeName]
 		)
 
+	/**
+	 * Generates insert statement
+	 */
 	override fun insertStatement(
 		insertStatement: InsertStatement<EntityID<Long>>,
 		chargerPortEntity: ChargerPortEntity
@@ -39,6 +46,9 @@ object ChargerPortsTable : BaseTable<ChargerPortEntity>(tableName = "charger_plu
 		return insertStatement
 	}
 
+	/**
+	 * Generates update statement
+	 */
 	override fun updateStatement(
 		updateStatement: UpdateStatement,
 		chargerPortEntity: ChargerPortEntity

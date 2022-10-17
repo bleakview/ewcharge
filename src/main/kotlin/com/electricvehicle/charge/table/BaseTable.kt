@@ -12,11 +12,20 @@ import org.jetbrains.exposed.sql.statements.UpdateStatement
 abstract class BaseTable<T : IBaseEntity>(tableName: String = "") : LongIdTable(name = tableName) {
 	val isActive: Column<Boolean> = bool("is_active")
 
-	abstract fun toRecord(hashIdService: HashIdService, row: ResultRow): T
+	/**
+	 * Abstract method converting [rows] to entites [T]
+	 */
+	abstract fun toEntity(row: ResultRow): T
 
+	/**
+	 * Abstract method for inserting
+	 */
 	abstract fun insertStatement(insertStatement: InsertStatement<EntityID<Long>>, baseEntity: T):
 			InsertStatement<EntityID<Long>>
 
+	/**
+	 * Abstract method for updating
+	 */
 	abstract fun updateStatement(updateStatement: UpdateStatement, baseEntity: T): UpdateStatement
 
 }

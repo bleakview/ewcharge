@@ -13,6 +13,9 @@ data class UserUpsertModel(
 
 )
 
+/**
+ * converts model to entity
+ */
 fun UserUpsertModel.toRecord(hashIdService: HashIdService): UserEntity = UserEntity(
 	id = hashIdService.decodeHash(id),
 	isActive = isActive,

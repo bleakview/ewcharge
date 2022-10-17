@@ -16,6 +16,9 @@ class startupService {
 	@Value("\${loki.uri}")
 	private var lokiUri: String = ""
 
+	/**
+	 * Used for changing uri of loki server
+	 */
 	@PostConstruct
 	fun onStartup() {
 		val loggerContext: LoggerContext = LoggerFactory.getILoggerFactory() as LoggerContext

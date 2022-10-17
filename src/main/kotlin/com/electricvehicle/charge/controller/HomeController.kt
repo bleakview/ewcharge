@@ -12,6 +12,7 @@ import java.security.Principal
 @Controller
 class HomeController {
 
+
 	@Produces(TEXT_PLAIN)
 	@Get
 	fun index(principal: Principal): String = principal.name

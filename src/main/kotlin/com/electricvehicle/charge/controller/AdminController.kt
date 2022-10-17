@@ -12,6 +12,7 @@ import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.annotation.Produces
+import io.micronaut.retry.annotation.CircuitBreaker
 import io.micronaut.scheduling.TaskExecutors
 import io.micronaut.scheduling.annotation.ExecuteOn
 import io.micronaut.security.annotation.Secured
@@ -29,6 +30,9 @@ open class AdminController(
 ) {
 	private val log: Logger = LoggerFactory.getLogger(AdminController::class.java)
 
+	/**
+	 * Create schema it is main usage would be init system.
+	 */
 	@Post("/createschema")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Secured(SecurityRule.IS_ANONYMOUS)
@@ -44,6 +48,9 @@ open class AdminController(
 		return HttpResponse.serverError()
 	}
 
+	/**
+	 * It is used to delete schema for a fresh start
+	 */
 	@Post("/deleteSchema")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Secured(SecurityRule.IS_ANONYMOUS)
@@ -61,6 +68,9 @@ open class AdminController(
 		return HttpResponse.serverError()
 	}
 
+	/**
+	 * Create default user it is required for authorization..
+	 */
 	@Post("/createtestusers")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Secured(SecurityRule.IS_ANONYMOUS)

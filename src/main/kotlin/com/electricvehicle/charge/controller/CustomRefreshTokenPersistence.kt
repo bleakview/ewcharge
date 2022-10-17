@@ -15,6 +15,9 @@ import reactor.core.publisher.FluxSink
 class CustomRefreshTokenPersistence(private val refreshTokenRepository: RefreshTokenRepository) :
 	RefreshTokenPersistence {
 
+	/**
+	 * Used for refreshing token
+	 */
 	override fun persistToken(event: RefreshTokenGeneratedEvent?) {
 		if (event?.refreshToken != null && event.authentication?.name != null) {
 			val payload = event.refreshToken
@@ -22,6 +25,9 @@ class CustomRefreshTokenPersistence(private val refreshTokenRepository: RefreshT
 		}
 	}
 
+	/**
+	 * Used for authentication by refresh token
+	 */
 	override fun getAuthentication(refreshToken: String): Publisher<Authentication> {
 		return Flux.create({ emitter: FluxSink<Authentication> ->
 			val tokenOpt = refreshTokenRepository.findByRefreshToken(refreshToken)

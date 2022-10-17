@@ -19,6 +19,9 @@ open class BaseRepository<T : BaseTable<U>, U : IBaseEntity>(
 	var db: Database? = databaseService.getDBInstance()
 	private val log: Logger = LoggerFactory.getLogger(BaseRepository::class.java)
 
+	/**
+	 * Get all items
+	 */
 	fun getAll(): List<IBaseEntity>? {
 		var resultList: List<IBaseEntity>? = null
 		try {
@@ -32,6 +35,9 @@ open class BaseRepository<T : BaseTable<U>, U : IBaseEntity>(
 
 	}
 
+	/**
+	 * Gets all active items
+	 */
 	fun getAllActive(): List<IBaseEntity>? {
 		var resultList: List<IBaseEntity>? = null
 		try {
@@ -46,6 +52,9 @@ open class BaseRepository<T : BaseTable<U>, U : IBaseEntity>(
 
 	}
 
+	/**
+	 * Find item by [id]
+	 */
 	fun find(id: Long): U? {
 		var result: U? = null
 		try {
@@ -62,6 +71,9 @@ open class BaseRepository<T : BaseTable<U>, U : IBaseEntity>(
 		return result
 	}
 
+	/**
+	 * find item by [hashId]
+	 */
 	fun find(hashId: String): U? {
 		var result: U? = null
 		try {
@@ -73,6 +85,9 @@ open class BaseRepository<T : BaseTable<U>, U : IBaseEntity>(
 		return result
 	}
 
+	/**
+	 * Save entity to database
+	 */
 	fun save(baseEntity: U): U? {
 		var recordId: Long = 0
 		try {
@@ -88,6 +103,9 @@ open class BaseRepository<T : BaseTable<U>, U : IBaseEntity>(
 		return find(recordId)
 	}
 
+	/**
+	 * Updates database
+	 */
 	fun update(baseEntity: U): U? {
 		try {
 			transaction(db) {
@@ -102,6 +120,9 @@ open class BaseRepository<T : BaseTable<U>, U : IBaseEntity>(
 		return find(baseEntity.id)
 	}
 
+	/**
+	 * Disactivates item by [id]
+	 */
 	fun softDelete(id: Long) {
 		try {
 			transaction(db) {
@@ -114,6 +135,9 @@ open class BaseRepository<T : BaseTable<U>, U : IBaseEntity>(
 		}
 	}
 
+	/**
+	 * Disactivates element by [hashId]
+	 */
 	fun softDelete(hashId: String) {
 		try {
 			val id = hashIdService.decodeHash(hashId)
@@ -123,6 +147,9 @@ open class BaseRepository<T : BaseTable<U>, U : IBaseEntity>(
 		}
 	}
 
+	/**
+	 * Deletes element from database
+	 */
 	fun delete(id: Long) {
 		try {
 			transaction(db) {
@@ -133,6 +160,9 @@ open class BaseRepository<T : BaseTable<U>, U : IBaseEntity>(
 		}
 	}
 
+	/**
+	 * Deletes element with given [hashId]
+	 */
 	fun delete(hashId: String) {
 		try {
 			val id = hashIdService.decodeHash(hashId)
@@ -142,5 +172,8 @@ open class BaseRepository<T : BaseTable<U>, U : IBaseEntity>(
 		}
 	}
 
-	protected fun ResultRow.toRecord() = longIdTable.toRecord(hashIdService, this)
+	/**
+	 * Add toRecord method to ResultRow
+	 */
+	protected fun ResultRow.toRecord() = longIdTable.toEntity(this)
 }

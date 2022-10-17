@@ -29,6 +29,10 @@ class DatabaseService {
 	@Value("\${datasources.default.schema}")
 	private lateinit var schema: String
 	private val log: Logger = LoggerFactory.getLogger(DatabaseService::class.java)
+
+	/**
+	 * Gets database instance with database uri and schema
+	 */
 	fun getDBInstance(): Database? {
 		try {
 			return Database.connect("${url}${schema}", driver = driver, user = user, password = password)
@@ -38,6 +42,9 @@ class DatabaseService {
 		return null
 	}
 
+	/**
+	 * Get database instance with given uri
+	 */
 	fun getDBInstanceWithoutSchema(): Database? {
 		try {
 			return Database.connect(url, driver = driver, user = user, password = password)
@@ -47,6 +54,9 @@ class DatabaseService {
 		return null
 	}
 
+	/**
+	 * Creates schema
+	 */
 	fun createSchema(): ReturnValue<Any> {
 		try {
 			transaction(getDBInstanceWithoutSchema()) {
@@ -64,6 +74,9 @@ class DatabaseService {
 		return ReturnValue()
 	}
 
+	/**
+	 * Deletes schema
+	 */
 	fun dropSchema(): ReturnValue<Any> {
 		try {
 			transaction(getDBInstance()) {

@@ -12,7 +12,10 @@ object UsersTable : BaseTable<UserEntity>(tableName = "users") {
 	val userName: Column<String> = varchar("username", 100)
 	val password: Column<String> = varchar("password", 100)
 	val role: Column<String> = varchar("role", 75)
-	override fun toRecord(hashIdService: HashIdService, row: ResultRow): UserEntity =
+	/**
+	 * Convert row to entity
+	 */
+	override fun toEntity(row: ResultRow): UserEntity =
 		UserEntity(
 			id = row[id].value,
 			isActive = row[isActive],
@@ -20,7 +23,9 @@ object UsersTable : BaseTable<UserEntity>(tableName = "users") {
 			password = row[password],
 			role = row[role],
 		)
-
+	/**
+	 * Generates insert statement
+	 */
 	override fun insertStatement(
 		insertStatement: InsertStatement<EntityID<Long>>,
 		userEntity: UserEntity
@@ -31,7 +36,9 @@ object UsersTable : BaseTable<UserEntity>(tableName = "users") {
 		insertStatement[isActive] = userEntity.isActive
 		return insertStatement
 	}
-
+	/**
+	 * Generates update statement
+	 */
 	override fun updateStatement(updateStatement: UpdateStatement, userEntity: UserEntity): UpdateStatement {
 		updateStatement[userName] = userEntity.userName
 		updateStatement[password] = userEntity.password

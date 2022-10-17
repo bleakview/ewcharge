@@ -11,6 +11,9 @@ data class UserEntity(
 	val role: String
 ) : IBaseEntity
 
+/**
+ * converts Entity to Model
+ */
 fun UserEntity.toUserModel(hashIdService: HashIdService): UserModel =
 	UserModel(
 		id = hashIdService.encodeHash(this.id),

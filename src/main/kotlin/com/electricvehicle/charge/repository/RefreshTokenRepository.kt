@@ -11,6 +11,10 @@ import java.util.*
 class RefreshTokenRepository(private val cacheService: CacheService) {
 	private val cachePrefix = "RefreshTokenRepository"
 	private val log: Logger = LoggerFactory.getLogger(RefreshTokenRepository::class.java)
+
+	/**
+	 * save refresh token to Redis
+	 */
 	fun save(username: String, refreshToken: String, revoked: Boolean): RefreshTokenEntity {
 		val refreshTokenEntity = RefreshTokenEntity(
 			id = refreshToken,
@@ -23,12 +27,18 @@ class RefreshTokenRepository(private val cacheService: CacheService) {
 		return refreshTokenEntity
 	}
 
+	/**
+	 * Find refresh token
+	 */
 	fun findByRefreshToken(refreshToken: String): Optional<RefreshTokenEntity> {
 		log.error("${cachePrefix}_${refreshToken}")
 		val refreshTokenEntity = cacheService.getData("${cachePrefix}_${refreshToken}") as? RefreshTokenEntity
 		return Optional.ofNullable(refreshTokenEntity)
 	}
 
+	/**
+	 * Update Token info by username
+	 */
 	fun updateByUserName(username: String, revoked: Boolean): String? {
 		val refreshTokenKey = cacheService.getData("${cachePrefix}_${username}") as? String
 		if (refreshTokenKey != null) {
@@ -42,10 +52,16 @@ class RefreshTokenRepository(private val cacheService: CacheService) {
 		return null
 	}
 
+	/**
+	 * Deletes all tokens
+	 */
 	fun deleteAll() {
 		cacheService.deleteAll(cachePrefix)
 	}
 
+	/**
+	 * Get token count
+	 */
 	fun count(): Long {
 		return cacheService.count()
 	}

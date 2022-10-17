@@ -17,11 +17,17 @@ class HashIdService {
 	@Value("\${hashid.length}")
 	private var length: Int = 0
 
+	/**
+	 * Encodes id and generates string key
+	 */
 	fun encodeHash(id: Long): String {
 		val hashids = Hashids(salt, length)
 		return hashids.encode(id)
 	}
 
+	/**
+	 * Decodes encoded key
+	 */
 	fun decodeHash(hashid: String): Long {
 		val hashids = Hashids(salt, length)
 		if (hashids.decode(hashid).isNotEmpty()) {

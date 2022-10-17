@@ -34,6 +34,9 @@ open class ChargerPortController(
 	private val cachePrefix = "ChargerPlugTypeModel"
 	private val log: Logger = LoggerFactory.getLogger(CacheService::class.java)
 
+	/**
+	 * Used for a getting charge port
+	 */
 	@Get("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Secured(SecurityRule.IS_AUTHENTICATED)
@@ -55,6 +58,9 @@ open class ChargerPortController(
 		return chargerPlugTypeModel
 	}
 
+	/**
+	 * Used for getting all chage ports
+	 */
 	@Get("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Secured(SecurityRule.IS_AUTHENTICATED)
@@ -78,6 +84,9 @@ open class ChargerPortController(
 		return chargerPlugTypeModel
 	}
 
+	/**
+	 * Used for creating charge port
+	 */
 	@Post("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Secured(SecurityRule.IS_AUTHENTICATED)
@@ -96,6 +105,9 @@ open class ChargerPortController(
 		return HttpResponse.serverError()
 	}
 
+	/**
+	 * Used for updating charge port
+	 */
 	@Put("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Secured(SecurityRule.IS_AUTHENTICATED)
@@ -114,6 +126,9 @@ open class ChargerPortController(
 		return HttpResponse.serverError()
 	}
 
+	/**
+	 * Used for deleting charge port (It do not deletes charge port it only disactivates it)
+	 */
 	@Delete("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Secured(SecurityRule.IS_AUTHENTICATED)

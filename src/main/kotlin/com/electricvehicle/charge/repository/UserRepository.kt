@@ -22,6 +22,10 @@ class UserRepository(
 ) :
 	BaseRepository<UsersTable, UserEntity>(hashIdService, databaseService, UsersTable) {
 	private val log: Logger = LoggerFactory.getLogger(UserRepository::class.java)
+
+	/**
+	 * Gets user by username
+	 */
 	fun getUserByUserName(username: String): UserEntity? {
 		var userEntity: UserEntity? = null
 		transaction(db) {
@@ -34,6 +38,9 @@ class UserRepository(
 		return userEntity
 	}
 
+	/**
+	 * Validates user by [userName] and [password]
+	 */
 	fun validateUser(userName: String, password: String): UserEntity? {
 		val userEntity = getUserByUserName(userName)
 		if ((userEntity != null) &&
@@ -45,6 +52,9 @@ class UserRepository(
 		return null
 	}
 
+	/**
+	 * Adds new user
+	 */
 	fun addUser(userEntity: UserEntity): UserEntity? {
 		var recordId: Long = 0
 		try {
@@ -64,6 +74,9 @@ class UserRepository(
 		return find(recordId)
 	}
 
+	/**
+	 * Updates user
+	 */
 	fun updateUser(userEntity: UserEntity): UserEntity? {
 		try {
 			if (find(userEntity.id) == null) {

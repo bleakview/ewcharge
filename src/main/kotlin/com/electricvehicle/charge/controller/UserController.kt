@@ -35,6 +35,9 @@ open class UserController(
 	private val cachePrefix = "UserModel"
 	private val log: Logger = LoggerFactory.getLogger(UserController::class.java)
 
+	/**
+	 * Used for getting user by id
+	 */
 	@Get("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Secured(SecurityRule.IS_AUTHENTICATED)
@@ -56,6 +59,9 @@ open class UserController(
 		return userModel
 	}
 
+	/**
+	 * Used for getting all users
+	 */
 	@Get("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Secured(SecurityRule.IS_AUTHENTICATED)
@@ -79,6 +85,9 @@ open class UserController(
 		return userModel
 	}
 
+	/**
+	 * Get all users including not active ones
+	 */
 	@Get("/list")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Secured(SecurityRule.IS_AUTHENTICATED)
@@ -102,6 +111,9 @@ open class UserController(
 		return userModel
 	}
 
+	/**
+	 * Create a new user
+	 */
 	@Post("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Secured(SecurityRule.IS_AUTHENTICATED)
@@ -121,6 +133,9 @@ open class UserController(
 		return HttpResponse.serverError()
 	}
 
+	/**
+	 * Validates user with username password
+	 */
 	@Post("/validate")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Secured(SecurityRule.IS_AUTHENTICATED)
@@ -139,6 +154,9 @@ open class UserController(
 		return false
 	}
 
+	/**
+	 * Updates user
+	 */
 	@Put("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Secured(SecurityRule.IS_AUTHENTICATED)
@@ -158,6 +176,9 @@ open class UserController(
 		return HttpResponse.serverError()
 	}
 
+	/**
+	 * deletes user not really deletes it changes active status
+	 */
 	@Delete("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Secured(SecurityRule.IS_AUTHENTICATED)
@@ -176,6 +197,9 @@ open class UserController(
 		return HttpResponse.serverError()
 	}
 
+	/**
+	 * Really deletes user from database
+	 */
 	@Delete("/harddelete/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Secured(SecurityRule.IS_AUTHENTICATED)
